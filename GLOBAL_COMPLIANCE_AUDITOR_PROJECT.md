@@ -1,13 +1,12 @@
-# 🚀 Global Compliance Auditor - Multi-Agent System Project
+# Global Compliance Auditor - Multi-Agent System Project
 
 **Project Type:** Kaggle Capstone - Agents for Business Track  
 **Technology Stack:** Google Agents ADK 2.0, MCP Server, Python 3.10+  
-**Submission Deadline:** July 6, 2026  
 **Status:** Development Ready
 
 ---
 
-## 📋 Project Overview
+## Project Overview
 
 ### The Problem
 Corporate expense reports take hours for finance teams to audit manually. Fraudulent or out-of-policy claims easily slip through the cracks, leading to:
@@ -31,9 +30,9 @@ Corporate expense reports take hours for finance teams to audit manually. Fraudu
 
 ---
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
-### Multi-Agent System (4 Specialized Agents)
+### Multi-Agent System (4 Specialized Agents) it is a sequential agent pattern (linear pipeline or chain pattern)
 
 Instead of one person doing everything, imagine a team of 4 specialists:
 
@@ -55,9 +54,9 @@ Employee Submits Expense
 
 ---
 
-## 🤖 The 4 Agents Explained
+## The 4 Agents Explained
 
-### Agent 1: Receipt Parser 🤖
+### Agent 1: Receipt Parser 
 
 **Job:** "Read messy text, extract clean data"
 
@@ -67,10 +66,10 @@ Employee Submits Expense
 ```
 
 **Processing:**
-- Extract amount → 85.50 ✅
-- Identify currency → EUR ✅
-- Detect country → Italy ✅
-- Flag PII (credit card found) → YES ✅
+- Extract amount → 85.50 
+- Identify currency → EUR 
+- Detect country → Italy 
+- Flag PII (credit card found) → YES 
 
 **Output (Clean Structured Data):**
 ```json
@@ -109,8 +108,8 @@ Employee Submits Expense
    - €85.50 × exchange rate (1.10) = $94.00 USD
 
 3. **Compliance Check**
-   - Is $94 < $100 limit? **YES ✅**
-   - Is compliant? **YES ✅**
+   - Is $94 < $100 limit? **YES **
+   - Is compliant? **YES **
 
 4. **Tax Reclamation**
    - Calculate VAT: €85.50 × 22% = €18.81 (can reclaim!)
@@ -130,7 +129,7 @@ Employee Submits Expense
 
 ---
 
-### Agent 3: Human Verification ⚠️
+### Agent 3: Human Verification 
 
 **Job:** "If expense breaks rules, ask manager for permission"
 
@@ -166,7 +165,7 @@ Decision: APPROVE or REJECT
 
 ---
 
-### Agent 4: Output Guardrail 🔒
+### Agent 4: Output Guardrail 
 
 **Job:** "Hide sensitive info, store safely"
 
@@ -199,7 +198,7 @@ Decision: APPROVE or REJECT
 
 ---
 
-## 🔄 Complete End-to-End Flow Example
+## Complete End-to-End Flow Example
 
 **Scenario:** Employee submits expense for Milan dinner
 
@@ -209,10 +208,10 @@ Decision: APPROVE or REJECT
 PHASE 1: AGENT 1 (Receipt Parser)
 Input: "Dinner Milan €85.50 AMEX 4532..."
 Output:
-  ✅ Amount: 85.50
-  ✅ Currency: EUR
-  ✅ Country: Italy
-  ✅ Has Credit Card: YES
+   Amount: 85.50
+   Currency: EUR
+   Country: Italy
+   Has Credit Card: YES
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -221,56 +220,56 @@ Input: Amount 85.50 EUR, Country Italy
 Work:
   1. Call MCP Server: "Italy policy?"
   2. Convert: €85.50 × 1.10 = $94.00
-  3. Check: $94 < $100? YES ✅
+  3. Check: $94 < $100? YES 
 Output:
-  ✅ Is Compliant: YES
-  ✅ Amount (USD): $94.00
-  ✅ Policy Limit: $100.00
-  ✅ VAT Reclaim: YES ($18.81)
+   Is Compliant: YES
+   Amount (USD): $94.00
+   Policy Limit: $100.00
+   VAT Reclaim: YES ($18.81)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 PHASE 3: AGENT 3 (Human Verification)
-Check: Is compliant? YES ✅
-Decision: SKIP THIS AGENT (no approval needed) ⏭️
+Check: Is compliant? YES 
+Decision: SKIP THIS AGENT (no approval needed) 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 PHASE 4: AGENT 4 (Output Guardrail)
 Work:
-  1. Hide card: XXXX-XXXX-XXXX-9012 ✅
-  2. Generate ID: TXN-2026-0627-001 ✅
-  3. Store safely in database ✅
+  1. Hide card: XXXX-XXXX-XXXX-9012 
+  2. Generate ID: TXN-2026-0627-001 
+  3. Store safely in database 
 Output:
-  ✅ Transaction ID: TXN-2026-0627-001
-  ✅ Amount: $94.00
-  ✅ Status: APPROVED
-  ✅ Date: 2026-06-27
+   Transaction ID: TXN-2026-0627-001
+   Amount: $94.00
+   Status: APPROVED
+   Date: 2026-06-27
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-RESULT: ✅ APPROVED AND STORED SECURELY
+RESULT:  APPROVED AND STORED SECURELY
 ```
 
 ---
 
-## 🗄️ MCP Server: The Policy Database
+## MCP Server: The Policy Database
 
 ### Why MCP Instead of Hardcoding?
 
-**❌ BAD WAY (Hardcoding):**
+** BAD WAY (Hardcoding):**
 ```python
 # In agent code
 if country == "Italy":
     limit = 100  # EUR
 ```
-Problem: When Italy changes limit to €120, you must rewrite agent code 😫
+Problem: When Italy changes limit to €120, you must rewrite agent code 
 
-**✅ GOOD WAY (MCP Server):**
+** GOOD WAY (MCP Server):**
 - Central policy database (separate system)
 - Agents query: "Hey MCP, what's Italy's limit?"
 - MCP responds: "€100"
-- Policy changes? Update MCP only, no agent code changes needed! ✅
+- Policy changes? Update MCP only, no agent code changes needed! 
 
 ### MCP Server Structure
 
@@ -300,14 +299,14 @@ Agent 2 reads this via MCP Server and applies correct regional rules automatical
 
 ---
 
-## 🌳 Conditional Branching Logic
+## Conditional Branching Logic
 
 The magic happens in state-based routing:
 
 ```
 Agent 2 Asks: "Is this expense OK?"
 
-         YES ✅           NO ❌
+         YES              NO 
           │                │
           │          Skip Agent 3?
           │          (needs approval)
@@ -326,7 +325,7 @@ Agent 2 Asks: "Is this expense OK?"
 Agent 2: "Is OK? YES"
 Agent 3: SKIPPED (save time)
 Agent 4: Store it
-→ APPROVED ✅
+→ APPROVED 
 ```
 
 **Scenario 2: Non-Compliant Expense ($150 > $100)**
@@ -335,12 +334,12 @@ Agent 2: "Is OK? NO"
 Agent 3: RUN (pause and ask boss)
 Manager logs in: "Approve it, client meeting"
 Agent 4: Store with approval note
-→ APPROVED WITH OVERRIDE ✅
+→ APPROVED WITH OVERRIDE 
 ```
 
 ---
 
-## 🔐 Security Features (5 Key Concepts)
+## Security Features (5 Key Concepts)
 
 ### 1. Multi-Agent System (ADK 2.0)
 - Decoupled agents in explicit directed graph
@@ -370,7 +369,7 @@ Agent 4: Store with approval note
 
 ---
 
-## 💻 Technical Stack
+##  Technical Stack
 
 | Component | Technology | Purpose |
 |-----------|-----------|---------|
@@ -386,7 +385,7 @@ Agent 4: Store with approval note
 
 ---
 
-## 📦 Project Structure
+##  Project Structure
 
 ```
 global-compliance-auditor/
@@ -427,7 +426,7 @@ global-compliance-auditor/
 
 ---
 
-## 🚀 Quick Start (30 Minutes)
+## Quick Start (30 Minutes)
 
 ### Step 1: Setup Environment (5 min)
 ```bash
@@ -462,7 +461,7 @@ pip install -r requirements.txt
 pip install google-agents-cli
 ```
 
-### Step 3: Get API Keys (10 min)
+### Step 3: How to get API Keys 
 
 | API | Link | Purpose |
 |-----|------|---------|
@@ -490,10 +489,10 @@ echo ".env" >> .gitignore
 python verify_setup.py
 
 # Expected output:
-# ✅ Python packages installed
-# ✅ Environment variables loaded
-# ✅ Google API accessible
-# ✅ Forex API accessible
+#  Python packages installed
+#  Environment variables loaded
+#  Google API accessible
+#  Forex API accessible
 ```
 
 ### Step 6: Run Test (2 min)
@@ -501,16 +500,16 @@ python verify_setup.py
 python tests/test_example.py
 
 # Expected output:
-# ✅ Agent 1: Receipt Parser
-# ✅ Agent 2: Compliance Enforcer
-# ✅ Agent 3: Human Verification (skipped)
-# ✅ Agent 4: Output Guardrail
-# ✅ Transaction stored safely
+#  Agent 1: Receipt Parser
+#  Agent 2: Compliance Enforcer
+#  Agent 3: Human Verification (skipped)
+#  Agent 4: Output Guardrail
+#  Transaction stored safely
 ```
 
 ---
 
-## 🐳 Docker Deployment
+##  Docker Deployment
 
 ### Build & Run Locally
 
@@ -567,27 +566,27 @@ kubectl get pods
 
 ---
 
-## 📊 Monitoring & Observability
+##  Monitoring & Observability
 
 ### Key Metrics Tracked
 
 ```
-📊 Throughput
+ Throughput
   └─ Transactions/minute: 45
   └─ Success rate: 97.3%
   └─ Avg processing time: 1.05s
 
-🔐 Security
+ Security
   └─ Total PII redactions: 12,450
   └─ Policy violations flagged: 342
   └─ Human approvals completed: 336
 
-💰 Business Impact
+ Business Impact
   └─ VAT recovered: $127,450
   └─ Compliance errors prevented: 8
   └─ Hours saved: 456
 
-⚠️ System Health
+ System Health
   └─ MCP Server latency: 245ms (normal)
   └─ API availability: 99.8%
   └─ Error rate: 0.1% (very low)
@@ -618,7 +617,7 @@ pii_redactions = Counter(
 
 ---
 
-## ❓ Troubleshooting
+##  Troubleshooting
 
 ### "ModuleNotFoundError: No module named 'google_agents'"
 ```bash
@@ -649,78 +648,11 @@ python -c "from app.config import Config; print(Config.FOREX_API_KEY)"
 
 ### Virtual environment not activating
 ```bash
-# On Mac/Linux:
-source .venv/bin/activate
-
 # On Windows:
 .venv\Scripts\activate
-
-# Verify (should show (.venv) prefix):
-which python
 ```
-
 ---
-
-## ✅ Final Verification Checklist
-
-Before submission to Kaggle, verify:
-
-```
-PHASE 1: Code Quality
-☐ Code runs in Antigravity IDE without errors
-☐ Graph visualization shows 4 agents correctly
-☐ Execution traces are logged and readable
-☐ State inspector shows correct data flow
-☐ Error handling doesn't break graph
-
-PHASE 2: Deployment
-☐ Docker image builds successfully
-☐ Container runs locally without errors
-☐ Health checks pass (curl /health)
-☐ Environment variables are configurable (not hardcoded)
-☐ Logs are informative and accessible
-
-PHASE 3: Documentation
-☐ README has clear architecture diagrams
-☐ Setup instructions are step-by-step
-☐ Deployment guide is complete
-☐ Troubleshooting guide covers common issues
-
-PHASE 4: Demonstration
-☐ Video shows system running in IDE
-☐ Graph visualization animated in video
-☐ Execution traces visible
-☐ Demo shows all 4 agents in sequence
-☐ Video under 5 minutes
-```
-
----
-
-## 🎯 Kaggle Submission Requirements
-
-### 1. GitHub Repository
-- ✅ Public link to your codebase
-- ✅ Comprehensive README.md
-- ✅ Architecture diagrams included
-- ✅ Step-by-step setup instructions
-- ✅ **NO API keys or passwords in code**
-
-### 2. Kaggle Writeup
-- ✅ Max 2,500 words
-- ✅ Problem statement & why agents are needed
-- ✅ System architecture explanation
-- ✅ Your journey & learnings
-- ✅ Business impact quantified
-
-### 3. Video Demonstration
-- ✅ Max 5 minutes
-- ✅ Problem statement (0:00-0:30)
-- ✅ Architecture walkthrough (0:30-2:00)
-- ✅ Live demo of system (2:00-4:00)
-- ✅ Final results & impact (4:00-5:00)
-- ✅ YouTube link in writeup
-
-### 4. Key Concepts Demonstrated
+1. Key Concepts Demonstrated
 ✅ **Multi-Agent System (ADK 2.0):** 4 agents orchestrated in graph  
 ✅ **MCP Server:** Policy database integration  
 ✅ **Security Features:** PII redaction & input validation  
@@ -729,7 +661,7 @@ PHASE 4: Demonstration
 
 ---
 
-## 📚 Learning Resources
+##  Learning Resources
 
 - **Google Agents Documentation:** https://developers.google.com/agents/docs
 - **Pydantic Validation:** https://docs.pydantic.dev/latest/
@@ -738,87 +670,5 @@ PHASE 4: Demonstration
 - **Kubernetes Basics:** https://kubernetes.io/docs/basics/
 
 ---
-
-## 🎬 What Your Video Demo Should Show
-
-### 30-Second Breakdown
-```
-00:00-00:10
-"Global Compliance Auditor running in Antigravity IDE"
-→ Show IDE opening, graph visualization
-
-00:10-00:20
-"Submit an expense and watch all 4 agents execute"
-→ Show Agent 1→2→3→4 lighting up
-→ Show execution trace panel
-
-00:20-00:30
-"Complex decisions: policies, currency, compliance, security"
-→ Show state inspector
-→ Highlight PII redaction
-→ Show final transaction stored
-
-00:30-00:40
-"Containerized and production-ready"
-→ Show Docker build
-→ Show container running
-
-00:40-00:50
-"Real business value"
-→ Show metrics dashboard
-→ Show transaction count, VAT recovered
-
-00:50-01:00
-"Full code on GitHub with documentation"
-→ Show GitHub repo
-→ Show README setup
-```
-
----
-
-## 🏆 Why This Wins at Kaggle
-
-✅ **Technical Excellence**
-- Clean ADK 2.0 multi-agent architecture
-- Dynamic policy management via MCP
-- Enterprise security (Pydantic, regex, pre-commit)
-- Production-ready deployment
-
-✅ **Business Impact**
-- Saves 40+ hours/month
-- Recovers 2-5% via VAT
-- Prevents 100% of compliance issues
-- Scales to 1000+ transactions/day
-
-✅ **Judge-Friendly Presentation**
-- Clear architecture diagrams
-- Working demo in IDE
-- Detailed execution traces
-- Deployment-ready code
-- Comprehensive documentation
-
----
-
-## 📞 Support & Next Steps
-
-**Ready to start coding?**
-
-1. Follow the Quick Start (30 min) ✅
-2. Build the 4 agents incrementally
-3. Test with sample expenses
-4. Deploy to Docker
-5. Create Kaggle writeup & video
-6. Submit by July 6, 2026
-
-**Questions?**
-- Check troubleshooting section
-- Review architecture diagrams
-- Test with `verify_setup.py`
-
----
-
-**Last Updated:** June 27, 2026  
-**Project Status:** Development-Ready  
-**Next Milestone:** Submit to Kaggle by July 6, 2026  
-
-🚀 **Build with confidence. Document with clarity. Win with impact!**
+**Last Updated:** July 6, 2026  
+**Project Status:** Development-Ready    
