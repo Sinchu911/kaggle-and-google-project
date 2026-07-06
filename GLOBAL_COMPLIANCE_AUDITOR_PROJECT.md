@@ -23,10 +23,10 @@ Corporate expense reports take hours for finance teams to audit manually. Fraudu
 4. Securely storing transactions with PII redaction
 
 ### Business Impact
-- ✅ **40+ hours/month** saved in manual auditing
-- ✅ **2-5% VAT recovery** through automatic reclamation
-- ✅ **100% compliance** - prevents policy violations
-- ✅ **Scales to 1000+ transactions/day**
+-  **40+ hours/month** saved in manual auditing
+-  **2-5% VAT recovery** through automatic reclamation
+-  **100% compliance** - prevents policy violations
+-  **Scales to 1000+ transactions/day**
 
 ---
 
@@ -547,7 +547,7 @@ gcloud run deploy global-compliance-auditor \
   --allow-unauthenticated
 
 # Result:
-# ✅ Your agent is live at:
+#  Your agent is live at:
 # https://global-compliance-auditor-xxxxx.a.run.app
 ```
 
@@ -653,11 +653,11 @@ python -c "from app.config import Config; print(Config.FOREX_API_KEY)"
 ```
 ---
 1. Key Concepts Demonstrated
-✅ **Multi-Agent System (ADK 2.0):** 4 agents orchestrated in graph  
-✅ **MCP Server:** Policy database integration  
-✅ **Security Features:** PII redaction & input validation  
-✅ **Agent Skills:** Custom tools with Pydantic validation  
-✅ **Deployability:** Docker & Kubernetes configs included  
+ **Multi-Agent System (ADK 2.0):** 4 agents orchestrated in graph  
+ **MCP Server:** Policy database integration  
+ **Security Features:** PII redaction & input validation  
+ **Agent Skills:** Custom tools with Pydantic validation  
+ **Deployability:** Docker & Kubernetes configs included  
 
 ---
 
